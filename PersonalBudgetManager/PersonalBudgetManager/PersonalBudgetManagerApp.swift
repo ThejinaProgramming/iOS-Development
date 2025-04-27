@@ -11,7 +11,7 @@ import SwiftUI
 struct PersonalBudgetManagerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            InitialView()
         }
     }
 }
