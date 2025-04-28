@@ -97,17 +97,23 @@ struct Dashboard: View {
                             TransactionRow(category: "Groceries", amount: "$ 20", type: .expense)
                         }
                     }
-                    Button("View All Transactions"){
-                        
-                    }
-                    .foregroundColor(.blue)
-                    .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .padding()
             }
             .padding(.horizontal)
             .padding(.top)
             Spacer()
+            
+            //View Transaction button
+            GroupBox{
+                Button("View All Transactions"){
+                    
+                }
+                .foregroundColor(.black)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            .padding(.horizontal)
+            .padding(.top)
         }
     }
 }
