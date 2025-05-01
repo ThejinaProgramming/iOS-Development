@@ -127,6 +127,8 @@ struct AddTransactionView: View {
                 Spacer()
             }
             
+            Spacer()
+            
             HStack{
                 Button("Save"){
                     
