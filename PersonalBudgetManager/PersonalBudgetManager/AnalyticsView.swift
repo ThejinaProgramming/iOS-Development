@@ -42,8 +42,7 @@ struct AnalyticsView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ScrollView {
+        ScrollView {
                 VStack(alignment: .leading, spacing: 20){
                     Text("Analytics")
                         .font(.title2)
@@ -103,13 +102,11 @@ struct AnalyticsView: View {
                             }
                         }
                     }
-                    Spacer()
                 }
                 .padding()
             }
         }
     }
-}
 
 #Preview {
     AnalyticsView()

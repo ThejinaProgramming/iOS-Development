@@ -48,7 +48,8 @@ struct SettingsView: View {
                             .font(.headline)
                         Text("Enable dark theme")
                             .font(.caption)
-                        .foregroundColor(.gray)                             }
+                            .foregroundColor(.gray)
+                    }
                     Spacer()
                     Toggle("", isOn: $isDarkModeEnabled)
                 }
@@ -64,7 +65,8 @@ struct SettingsView: View {
                             .font(.headline)
                         Text("Set your custom reminders")
                             .font(.caption)
-                        .foregroundColor(.gray)                              }
+                            .foregroundColor(.gray)
+                    }
                     Spacer()
                     Button(action: {
                         // Action: Navigate to reminders screen

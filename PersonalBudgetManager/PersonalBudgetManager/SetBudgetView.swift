@@ -28,13 +28,13 @@ struct SetBudgetView: View {
     }
     
     var body: some View {
-        NavigationView {
             VStack(alignment: .leading, spacing: 20){
                 VStack(alignment: .leading){
                     Text("Set Budget Goal")
                         .font(.title2)
                         .bold()
                 }
+                
                 //Used budget section
                 GroupBox{
                     VStack(alignment: .leading, spacing: 10){
@@ -64,7 +64,6 @@ struct SetBudgetView: View {
                         }
                     }
                 }
-                Spacer()
                 
                 VStack(alignment: .leading){
                     Text("Budget Amount")
@@ -135,7 +134,7 @@ struct SetBudgetView: View {
                         }
                     }
                 }
-                Spacer()
+
                 
                 HStack{
                     Button("Delete"){
@@ -145,6 +144,7 @@ struct SetBudgetView: View {
                     
                     Spacer()
                 }
+                Spacer()
                 
                 HStack{
                     Button("Save"){
@@ -166,11 +166,10 @@ struct SetBudgetView: View {
                     .cornerRadius(8)
                 }
             }
+            .padding()
         }
-        .padding()
     }
-    
-}
+
 
 
 
