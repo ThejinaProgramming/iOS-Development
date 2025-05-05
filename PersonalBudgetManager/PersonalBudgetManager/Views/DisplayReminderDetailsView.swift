@@ -1,16 +1,17 @@
 //
-//  CreateRemindersView.swift
+//  DisplayReminderDetailsView.swift
 //  PersonalBudgetManager
 //
-//  Created by user271744 on 4/28/25.
+//  Created by user271744 on 5/5/25.
 //
 
 import SwiftUI
 
-struct CreateRemindersView: View {
-    //let reminder: Reminder
+struct DisplayReminderDetailsView: View {
     @ObservedObject var reminderViewModel: ReminderViewModel
-    @Binding var showingAddReminderView: Bool
+    @Binding var showingViewReminderView: Bool
+    
+    @ObservedObject var reminder: Reminder
     
     @State private var reminderName: String = ""
     @State private var reminderFrequency: String = ""
@@ -18,10 +19,13 @@ struct CreateRemindersView: View {
     @State private var selectedTime: Date = Date()
     @State private var description: String = ""
     
+    @State private var isDelete: Bool = false
+    @State var text: String = ""
+    
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
-                Text("Create Reminder")
+                Text("Reminder Details")
                     .font(.title2)
                     .bold()
                     .padding(.bottom)
@@ -29,6 +33,7 @@ struct CreateRemindersView: View {
                 //Reminder Name
                 Text("Reminder Name")
                     .font(.headline)
+                Text(reminder.reminderName ?? "")
                 TextField("Enter Reminder Name", text: $reminderName)
                     .padding()
                     .background(Color(.systemGray6))
@@ -80,13 +85,33 @@ struct CreateRemindersView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
                 
+                
+                HStack{
+                    Button("Delete"){
+                        isDelete.toggle()
+                    }
+                    .confirmationDialog("Are you sure", isPresented: $isDelete){
+                        Button("Delete Reminder", role: .destructive){
+                            reminderViewModel.deleteReminder(reminder)
+                            reminderViewModel.fetchReminders()
+                            showingViewReminderView = false
+                            isDelete.toggle()
+                        }
+                    }
+                    message: {
+                        Text("You can not undo this action.")
+                    }
+                    .foregroundColor(.red)
+                    
+                    Spacer()
+                }
                 Spacer()
                 
                 HStack{
                     Button("Save"){
                         reminderViewModel.addReminder(name: reminderName, frequency: reminderFrequency, date: selectedDate, time: selectedTime ,description: description)
                         reminderViewModel.fetchReminders()
-                        showingAddReminderView = false
+                        showingViewReminderView = false
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -95,7 +120,7 @@ struct CreateRemindersView: View {
                     .cornerRadius(10)
                     
                     Button("Cancel"){
-                        showingAddReminderView = false
+                        showingViewReminderView = false
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -105,6 +130,9 @@ struct CreateRemindersView: View {
                 }
             }
             .padding()
+        }
+        .onAppear{
+            reminderName = reminder.reminderName ?? ""
         }
     }
 }

@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct PersonalBudgetManagerApp: App {
+    let persistenceController = PersistenceController.shared
+    @StateObject private var reminderVM = ReminderViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            InitialView()
+            InitialView(reminderVM: reminderVM)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

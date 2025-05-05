@@ -14,11 +14,12 @@ class ReminderViewModel: ObservableObject{
     
     init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext){
         self.viewContext = viewContext
+        fetchReminders()
     }
     
     func fetchReminders(){
         let request = NSFetchRequest<Reminder>(entityName: "Reminder")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Reminder.selectedDate, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Reminder.selectedDate, ascending: false)]
         
         do{
             reminders = try viewContext.fetch(request)
@@ -40,6 +41,8 @@ class ReminderViewModel: ObservableObject{
         saveReminder()
         objectWillChange.send()
     }
+    
+    
     
     func deleteReminder(_ reminderItem: Reminder){
         viewContext.delete(reminderItem)

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var reminderVM : ReminderViewModel
     var body: some View {
         TabView{
             Dashboard().tabItem {
@@ -19,7 +20,7 @@ struct ContentView: View {
             CreateCategoryView().tabItem {
                 Label("Category", systemImage: "table")
             }
-            RemindersView().tabItem {
+            RemindersView(reminderViewModel: reminderVM).tabItem {
                 Label("Reminder", systemImage: "clock")
             }
             AnalyticsView().tabItem {
@@ -32,6 +33,3 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}

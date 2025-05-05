@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct RemindersView: View {
+    @ObservedObject var reminderViewModel: ReminderViewModel
+    @State private var showingAddReminderView = false
+    @State private var showingViewReminderView = false
+    
+    @State var selectedReminder: Reminder = Reminder()
+    
     var body: some View {
         NavigationStack{
             VStack(alignment: .leading){
@@ -17,29 +23,39 @@ struct RemindersView: View {
                     .padding(.bottom)
                 
                 List{
-                    ReminderRow(title: "Pay Phone Bill")
-                    ReminderRow(title: "Pay Light Bill")
-                    ReminderRow(title: "Pay University Fee")
-                    ReminderRow(title: "Donate Money")
+                    ForEach(reminderViewModel.reminders){reminder in
+                        Button{
+                            selectedReminder = reminder
+                            showingViewReminderView = true
+                        }
+                        label:{
+                            ReminderRow(title: reminder.reminderName ?? "")
+                        }
+                    }
                 }
                 Spacer()
-                
-                NavigationLink(destination: CreateRemindersView()){
-                    Image(systemName: "plus")
-                        .font(.title)
-                        .padding()
-                        .background(Color.gray)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding()
+                    .sheet(isPresented: $showingAddReminderView){
+                        CreateRemindersView(reminderViewModel: reminderViewModel, showingAddReminderView: $showingAddReminderView)
+                    }
+                    .sheet(isPresented: $showingViewReminderView){
+                        DisplayReminderDetailsView(reminderViewModel: reminderViewModel, showingViewReminderView: $showingViewReminderView, reminder: selectedReminder)
+                    }
+            }
+            .onAppear{
+                reminderViewModel.fetchReminders()
             }
             .padding()
+            Button{
+                showingAddReminderView = true
+            }label: {
+                Image(systemName: "plus")
+                    .font(.title)
+                    .padding()
+                    .background(Color.gray)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+            }
         }
     }
 }
 
-#Preview {
-    RemindersView()
-}

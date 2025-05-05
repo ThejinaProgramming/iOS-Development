@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
+    @ObservedObject var reminderVM: ReminderViewModel
     @State private var email = ""
     var body: some View {
         NavigationStack{
@@ -44,7 +45,7 @@ struct ForgotPasswordView: View {
                 
                 HStack{
                     Spacer()
-                    NavigationLink(destination: SignView()){
+                    NavigationLink(destination: SignView(reminderVM: reminderVM)){
                         Text("Back to Sign in")
                             .foregroundColor(.blue)
                     }
@@ -56,6 +57,3 @@ struct ForgotPasswordView: View {
     }
 }
 
-#Preview {
-    ForgotPasswordView()
-}
