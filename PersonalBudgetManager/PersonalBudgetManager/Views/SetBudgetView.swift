@@ -9,13 +9,15 @@ import SwiftUI
 
 struct SetBudgetView: View {
     @State private var budgetAmount: String = ""
-    @State private var budgetPeriod: BudgetPeriod = .monthly
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
     @State private var showingDatePickerStart = false
     @State private var showingDatePickerEnd = false
     @State private var isMonthlyBudget: Bool = true
     @EnvironmentObject private var settingsManager: SettingsManager
+    
+    // Asset
+    @ObservedObject var assetVM : AssetsViewModel
     
     let totalBudget: Double = 2000
     let spendBudget: Double = 1200
@@ -31,7 +33,7 @@ struct SetBudgetView: View {
     var body: some View {
             VStack(alignment: .leading, spacing: 20){
                 VStack(alignment: .leading){
-                    Text("Set Budget Goal")
+                    Text("Assets")
                         .font(.title2)
                         .bold()
                 }
@@ -67,89 +69,34 @@ struct SetBudgetView: View {
                 }
                 
                 VStack(alignment: .leading){
-                    Text("Budget Amount")
+                    Text("Amount")
                         .font(.headline)
-                    TextField("Enter Budget Amount", text: $budgetAmount)
+                    TextField("Enter Amount", text: $budgetAmount)
                         .keyboardType(.numberPad)
                         .padding()
                         .border(Color.gray, width: 1)
                 }
                 
-                
-                //Budget period section
-                Text("Budget Period")
-                    .font(.headline)
-                HStack{
-                    HStack{
-                        Button(action: {
-                            budgetPeriod = .monthly
-                            isMonthlyBudget = true
-                        }){
-                            HStack{
-                                Image(systemName: isMonthlyBudget ? "circle.fill" : "circle")
-                                Text("Monthly Budget")
-                            }
-                            .padding(.horizontal)
-                            .foregroundColor(.black)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        Spacer()
-                        
-                        Button(action: {
-                            budgetPeriod = .custom
-                            isMonthlyBudget = false
-                        }){
-                            HStack{
-                                Image(systemName: !isMonthlyBudget ? "circle.fill" : "circle")
-                                Text("Custom Range")
-                            }
-                            .padding(.horizontal)
-                            .foregroundColor(.black)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                }
-                
-                if budgetPeriod == .custom{
-                    HStack{
-                        VStack{
-                            Text("Start Date: ")
-                            DatePicker(
-                                "", selection : $startDate, displayedComponents: [.date]
-                            )
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                        }
-                        
-                        Text("to")
-                        
-                        VStack{
-                            Text("End Date: ")
-                            DatePicker(
-                                "", selection: $endDate, displayedComponents: [.date]
-                            )
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                        }
-                    }
-                }
-
-                
-                HStack{
-                    Button("Delete"){
-                        
-                    }
-                    .foregroundColor(.red)
-                    
-                    Spacer()
-                }
                 Spacer()
                 
                 HStack{
+                    List{
+                        ForEach(assetVM.assets){asset in
+                            Button{
+                                
+                            }
+                            label:{
+                                Text(String(asset.amount))
+                            }
+                        }
+                    }
+                }
+                
+                HStack{
                     Button("Save"){
-                        
+                        assetVM.addAsset(amount: Double(budgetAmount) ?? 0.0)
+                        budgetAmount = ""
+                        assetVM.fetchAssets()
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -158,7 +105,8 @@ struct SetBudgetView: View {
                     .cornerRadius(10)
                     
                     Button("Cancel"){
-                        
+                        budgetAmount = ""
+                        assetVM.fetchAssets()
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -171,15 +119,3 @@ struct SetBudgetView: View {
         }
     }
 
-
-
-
-enum BudgetPeriod{
-    case monthly
-    case custom
-}
-
-#Preview {
-    SetBudgetView()
-        .environmentObject(SettingsManager.shared)
-}

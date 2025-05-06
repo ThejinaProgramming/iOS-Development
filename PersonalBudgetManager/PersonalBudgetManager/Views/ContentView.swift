@@ -10,13 +10,14 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var reminderVM : ReminderViewModel
     @EnvironmentObject var settingsManager: SettingsManager
+    @StateObject private var assetVM = AssetsViewModel()
     
     var body: some View {
         TabView{
             Dashboard().tabItem {
                 Label("Home", systemImage: "house")
             }
-            SetBudgetView().tabItem {
+            SetBudgetView(assetVM: assetVM).tabItem {
                 Label("Budget", systemImage: "dollarsign")
             }
             CreateCategoryView().tabItem {

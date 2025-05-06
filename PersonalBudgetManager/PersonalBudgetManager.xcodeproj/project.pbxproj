@@ -34,6 +34,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				Models/CoreData/ApplicationDataModel.xcdatamodeld,
 				Models/Supportive/BudgetData.swift,
 				Models/Supportive/Currency.swift,
 				Models/Supportive/ExpenseData.swift,
@@ -43,6 +44,7 @@
 				Resources/currencies.json,
 				Services/PersistenceController.swift,
 				Services/SettingsManager.swift,
+				ViewModels/AssetsViewModel.swift,
 				ViewModels/CategoryViewModel.swift,
 				ViewModels/ReminderViewModel.swift,
 				Views/AddTransactionView.swift,
@@ -78,6 +80,7 @@
 				Resources/currencies.json,
 				Services/PersistenceController.swift,
 				Services/SettingsManager.swift,
+				ViewModels/AssetsViewModel.swift,
 				ViewModels/CategoryViewModel.swift,
 				ViewModels/ReminderViewModel.swift,
 				Views/AddTransactionView.swift,
@@ -101,22 +104,11 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		4E0205BF2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "Compile Sources" phase from "PersonalBudgetManager" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = CCF1E95F2DB6E9F900DCDE85 /* Sources */;
-			membershipExceptions = (
-				Models/CoreData/ApplicationDataModel.xcdatamodeld,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4E0205A32DCA032700E0C4C5 /* PersonalBudgetManager */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				4E0205BE2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "PersonalBudgetManager" target */,
-				4E0205BF2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "Compile Sources" phase from "PersonalBudgetManager" target */,
 				4E0205C02DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "PersonalBudgetManagerUITests" target */,
 			);
 			path = PersonalBudgetManager;
