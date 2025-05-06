@@ -15,6 +15,7 @@ struct SetBudgetView: View {
     @State private var showingDatePickerStart = false
     @State private var showingDatePickerEnd = false
     @State private var isMonthlyBudget: Bool = true
+    @EnvironmentObject private var settingsManager: SettingsManager
     
     let totalBudget: Double = 2000
     let spendBudget: Double = 1200
@@ -49,17 +50,17 @@ struct SetBudgetView: View {
                         HStack{
                             Text("Total Budget:")
                             Spacer()
-                            Text("$\(totalBudget, specifier: "%.0f")")
+                            Text("\(settingsManager.getCurrencySymbol())\(totalBudget, specifier: "%.0f")")
                         }
                         HStack{
                             Text("Spent:")
                             Spacer()
-                            Text("$\(spendBudget, specifier: "%.0f")")
+                            Text("\(settingsManager.getCurrencySymbol())\(spendBudget, specifier: "%.0f")")
                         }
                         HStack{
                             Text("Remaining:")
                             Spacer()
-                            Text("$\(remainingBudget, specifier: "%.0f")")
+                            Text("\(settingsManager.getCurrencySymbol())\(remainingBudget, specifier: "%.0f")")
                                 .foregroundColor(remainingBudget >= 0 ? .green: .red)
                         }
                     }
@@ -180,4 +181,5 @@ enum BudgetPeriod{
 
 #Preview {
     SetBudgetView()
+        .environmentObject(SettingsManager.shared)
 }

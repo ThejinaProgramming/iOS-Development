@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var isDarkModeEnabled = false
+    @StateObject private var settingsManager = SettingsManager.shared
+    @AppStorage("isDarkModeEnabled") private var isDarkModeEnabled = false
+       
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Settings")
@@ -23,21 +26,43 @@ struct SettingsView: View {
                     VStack(alignment: .leading) {
                         Text("Currency")
                             .font(.headline)
-                        Text("Select Your preferd currency")
+                        Text("Select Your preferrd currency")
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
                     Spacer()
-                    // Currency Picker (Placeholder)
-                    Picker("USD", selection: .constant(0)) { // Replace with actual picker logic
-                        Text("USD").tag(0)
-                        Text("EUR").tag(1)
-                        // Add more currencies
+                
+                    // Currency Picker dropdown menu
+                    Menu {
+                        ForEach(settingsManager.currencies) { currency in
+                            Button(action: {
+                                settingsManager.setSelectedCurrency(currency)
+                            }) {
+                                HStack {
+                                    Text("\(currency.symbol) \(currency.code)")
+                                    if currency.code == settingsManager.selectedCurrencyCode {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                        
+                    } label: {
+                        HStack {
+                            Text(settingsManager.selectedCurrency?.code ?? "USD")
+                            Image(systemName: "chevron.down")
+                                .font(.caption)
+                            }
+                        .foregroundStyle(Color.primary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(6)
+                        }
                     }
-                    .frame(width: 80)
-                }
             }
             .padding(.bottom)
+            
             
             // Dark Mode
             GroupBox {
@@ -52,6 +77,10 @@ struct SettingsView: View {
                     }
                     Spacer()
                     Toggle("", isOn: $isDarkModeEnabled)
+                        .onChange(of: isDarkModeEnabled) { _, _ in
+                        // handled by app's environment
+                        }
+                                        
                 }
             }
             .padding(.bottom)
@@ -96,6 +125,7 @@ struct SettingsView: View {
             }
         }
         .padding()
+        .preferredColorScheme(isDarkModeEnabled ? .dark : .light)
     }
 }
 

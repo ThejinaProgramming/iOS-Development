@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var reminderVM : ReminderViewModel
+    @EnvironmentObject var settingsManager: SettingsManager
+    
     var body: some View {
         TabView{
             Dashboard().tabItem {
