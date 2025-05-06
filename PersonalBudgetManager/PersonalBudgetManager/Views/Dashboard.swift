@@ -9,6 +9,9 @@ import SwiftUI
 
 struct Dashboard: View {
     @EnvironmentObject private var settingsManager: SettingsManager
+    @State private var showingAddTransactionView = false
+    
+    @StateObject private var transactionVM = TransactionViewModel()
     
     var body: some View {
         NavigationStack{
@@ -74,7 +77,9 @@ struct Dashboard: View {
                 .padding(.top)
                 
                 //Add transaction button
-                NavigationLink(destination: AddTransactionView()){
+                Button{
+                    showingAddTransactionView = true
+                }label: {
                     Image(systemName: "plus")
                         .font(.title)
                         .padding()
@@ -82,8 +87,6 @@ struct Dashboard: View {
                         .foregroundColor(.white)
                         .clipShape(Circle())
                 }
-                .padding()
-                
                 
                 //Recent Transactions
                 GroupBox{
@@ -92,10 +95,14 @@ struct Dashboard: View {
                             .font(.headline)
                         ScrollView{
                             VStack{
-                                TransactionRow(category: "Groceries", amount: "\(settingsManager.getCurrencySymbol()) 20", type: .expense)
-                                TransactionRow(category: "Salary", amount: "\(settingsManager.getCurrencySymbol()) 2000", type: .income)
-                                TransactionRow(category: "Transport", amount: " \(settingsManager.getCurrencySymbol()) 20", type: .expense)
-                                TransactionRow(category: "Groceries", amount: "\(settingsManager.getCurrencySymbol()) 20", type: .expense)
+                                ForEach(transactionVM.transactions){transaction in
+                                    Button{
+                                        
+                                    }
+                                    label:{
+                                        TransactionRow(category: transaction.category ?? "" , amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount), type: transaction.isExpense ? .expense : .income)
+                                    }
+                                }
                             }
                         }
                     }
@@ -116,6 +123,12 @@ struct Dashboard: View {
                 .padding(.horizontal)
                 .padding(.top)
             }
+        }
+        .sheet(isPresented: $showingAddTransactionView){
+            AddTransactionView(transactionVM: transactionVM, showingAddTransactionView: $showingAddTransactionView)
+        }
+        .onAppear{
+            transactionVM.fetchTransactions()
         }
     }
 }

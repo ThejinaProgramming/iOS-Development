@@ -16,6 +16,9 @@ struct AddTransactionView: View {
     @State private var isCategoryDropdownVisible: Bool = false
     @State private var availableCategories: [String] = ["Food", "Transport", "Entertainment", "Salary", "Other"]
     
+    @ObservedObject var transactionVM: TransactionViewModel
+    @Binding var showingAddTransactionView: Bool
+    
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
@@ -119,20 +122,14 @@ struct AddTransactionView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
                 
-                HStack{
-                    Button("Delete"){
-                        
-                    }
-                    .foregroundColor(.red)
-                    
-                    Spacer()
-                }
                 
                 Spacer()
                 
                 HStack{
                     Button("Save"){
-                        
+                        transactionVM.addTransaction(amount: amount, category: category, date: date, isExpense: isExpense, note: description)
+                        transactionVM.fetchTransactions()
+                        showingAddTransactionView.toggle()
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -141,7 +138,7 @@ struct AddTransactionView: View {
                     .cornerRadius(10)
                     
                     Button("Cancel"){
-                        
+                        showingAddTransactionView.toggle()
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -155,6 +152,3 @@ struct AddTransactionView: View {
     }
 }
 
-#Preview {
-    AddTransactionView()
-}
