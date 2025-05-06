@@ -108,7 +108,7 @@ struct Dashboard: View {
                     Button("View All Transactions"){
                         
                     }
-                    .foregroundColor(.black)
+                    .foregroundColor(.blue)
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .padding(.horizontal)
