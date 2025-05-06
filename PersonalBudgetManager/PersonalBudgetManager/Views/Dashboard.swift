@@ -113,15 +113,17 @@ struct Dashboard: View {
                 Spacer()
                 
                 //View Transaction button
-                GroupBox{
-                    Button("View All Transactions"){
-                        
+                NavigationStack{
+                    GroupBox{
+                        NavigationLink(destination: DisplayAllTransactionsView(transactionVM: transactionVM)){
+                            Text("View All Transaction")
+                        }
+                        .foregroundColor(.blue)
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .foregroundColor(.blue)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.horizontal)
+                    .padding(.top)
                 }
-                .padding(.horizontal)
-                .padding(.top)
             }
         }
         .sheet(isPresented: $showingAddTransactionView){
