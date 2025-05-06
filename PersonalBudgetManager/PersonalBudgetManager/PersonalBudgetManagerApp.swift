@@ -11,11 +11,15 @@ import SwiftUI
 struct PersonalBudgetManagerApp: App {
     let persistenceController = PersistenceController.shared
     @StateObject private var reminderVM = ReminderViewModel()
+    @StateObject private var settingsManager = SettingsManager.shared
+    @AppStorage("isDarkModeEnabled") private var isDarkModeEnabled = false
     
     var body: some Scene {
         WindowGroup {
             InitialView(reminderVM: reminderVM)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(settingsManager)
+                .preferredColorScheme(isDarkModeEnabled ? .dark : .light)
         }
     }
 }

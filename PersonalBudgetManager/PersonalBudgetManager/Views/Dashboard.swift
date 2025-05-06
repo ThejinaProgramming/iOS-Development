@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Dashboard: View {
+    @EnvironmentObject private var settingsManager: SettingsManager
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -19,7 +21,7 @@ struct Dashboard: View {
                             VStack{
                                 Text("Total Balance")
                                     .font(.headline)
-                                Text("$ 1300")
+                                Text("\(settingsManager.getCurrencySymbol()) 1300")
                                     .font(.title)
                             }
                         }
@@ -31,7 +33,7 @@ struct Dashboard: View {
                                 VStack{
                                     Text("Income")
                                         .font(.subheadline)
-                                    Text("$ 1200")
+                                    Text("\(settingsManager.getCurrencySymbol()) 1200")
                                 }
                             }
                             Spacer()
@@ -41,7 +43,7 @@ struct Dashboard: View {
                                 VStack{
                                     Text("Expense")
                                         .font(.subheadline)
-                                    Text("$ 1000")
+                                    Text("\(settingsManager.getCurrencySymbol()) 1000")
                                 }
                             }
                         }
@@ -61,9 +63,9 @@ struct Dashboard: View {
                         }
                         ProgressBar(value: 0.6)
                         HStack{
-                            Text("Spent: $1200")
+                            Text("Spent: \(settingsManager.getCurrencySymbol())1200")
                             Spacer()
-                            Text("Goal: $1000")
+                            Text("Goal: \(settingsManager.getCurrencySymbol())1000")
                         }
                     }
                     .padding()
@@ -76,7 +78,7 @@ struct Dashboard: View {
                     Image(systemName: "plus")
                         .font(.title)
                         .padding()
-                        .background(Color.gray)
+                        .background(Color.blue)
                         .foregroundColor(.white)
                         .clipShape(Circle())
                 }
@@ -90,10 +92,10 @@ struct Dashboard: View {
                             .font(.headline)
                         ScrollView{
                             VStack{
-                                TransactionRow(category: "Groceries", amount: "$ 20", type: .expense)
-                                TransactionRow(category: "Salary", amount: "$ 2000", type: .income)
-                                TransactionRow(category: "Transport", amount: "$ 20", type: .expense)
-                                TransactionRow(category: "Groceries", amount: "$ 20", type: .expense)
+                                TransactionRow(category: "Groceries", amount: "\(settingsManager.getCurrencySymbol()) 20", type: .expense)
+                                TransactionRow(category: "Salary", amount: "\(settingsManager.getCurrencySymbol()) 2000", type: .income)
+                                TransactionRow(category: "Transport", amount: " \(settingsManager.getCurrencySymbol()) 20", type: .expense)
+                                TransactionRow(category: "Groceries", amount: "\(settingsManager.getCurrencySymbol()) 20", type: .expense)
                             }
                         }
                     }
@@ -120,4 +122,5 @@ struct Dashboard: View {
 
 #Preview {
     Dashboard()
+        .environmentObject(SettingsManager.shared)
 }

@@ -29,9 +29,96 @@
 		CCF1E97A2DB6E9FA00DCDE85 /* PersonalBudgetManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalBudgetManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4E0205BE2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "PersonalBudgetManager" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Models/Supportive/BudgetData.swift,
+				Models/Supportive/Currency.swift,
+				Models/Supportive/ExpenseData.swift,
+				Models/Supportive/IncomeData.swift,
+				Models/Supportive/IncomeExpenseData.swift,
+				PersonalBudgetManagerApp.swift,
+				Resources/currencies.json,
+				Services/PersistenceController.swift,
+				Services/SettingsManager.swift,
+				ViewModels/CategoryViewModel.swift,
+				ViewModels/ReminderViewModel.swift,
+				Views/AddTransactionView.swift,
+				Views/AnalyticsView.swift,
+				Views/ContentView.swift,
+				Views/CreateCategoryView.swift,
+				Views/CreateRemindersView.swift,
+				Views/Dashboard.swift,
+				Views/DisplayReminderDetailsView.swift,
+				Views/ForgotPasswordView.swift,
+				Views/InitialView.swift,
+				Views/ProgressBar.swift,
+				Views/ReminderRow.swift,
+				Views/RemindersView.swift,
+				Views/SetBudgetView.swift,
+				Views/SettingsView.swift,
+				Views/SignView.swift,
+				Views/TransactionRow.swift,
+			);
+			target = CCF1E9622DB6E9F900DCDE85 /* PersonalBudgetManager */;
+		};
+		4E0205C02DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "PersonalBudgetManagerUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Models/CoreData/ApplicationDataModel.xcdatamodeld,
+				Models/Supportive/BudgetData.swift,
+				Models/Supportive/Currency.swift,
+				Models/Supportive/ExpenseData.swift,
+				Models/Supportive/IncomeData.swift,
+				Models/Supportive/IncomeExpenseData.swift,
+				PersonalBudgetManagerApp.swift,
+				Resources/currencies.json,
+				Services/PersistenceController.swift,
+				Services/SettingsManager.swift,
+				ViewModels/CategoryViewModel.swift,
+				ViewModels/ReminderViewModel.swift,
+				Views/AddTransactionView.swift,
+				Views/AnalyticsView.swift,
+				Views/ContentView.swift,
+				Views/CreateCategoryView.swift,
+				Views/CreateRemindersView.swift,
+				Views/Dashboard.swift,
+				Views/DisplayReminderDetailsView.swift,
+				Views/ForgotPasswordView.swift,
+				Views/InitialView.swift,
+				Views/ProgressBar.swift,
+				Views/ReminderRow.swift,
+				Views/RemindersView.swift,
+				Views/SetBudgetView.swift,
+				Views/SettingsView.swift,
+				Views/SignView.swift,
+				Views/TransactionRow.swift,
+			);
+			target = CCF1E9792DB6E9FA00DCDE85 /* PersonalBudgetManagerUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		4E0205BF2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "Compile Sources" phase from "PersonalBudgetManager" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = CCF1E95F2DB6E9F900DCDE85 /* Sources */;
+			membershipExceptions = (
+				Models/CoreData/ApplicationDataModel.xcdatamodeld,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CCF1E9652DB6E9F900DCDE85 /* PersonalBudgetManager */ = {
+		4E0205A32DCA032700E0C4C5 /* PersonalBudgetManager */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4E0205BE2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "PersonalBudgetManager" target */,
+				4E0205BF2DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "Compile Sources" phase from "PersonalBudgetManager" target */,
+				4E0205C02DCA032700E0C4C5 /* Exceptions for "PersonalBudgetManager" folder in "PersonalBudgetManagerUITests" target */,
+			);
 			path = PersonalBudgetManager;
 			sourceTree = "<group>";
 		};
@@ -75,7 +162,7 @@
 		CCF1E95A2DB6E9F900DCDE85 = {
 			isa = PBXGroup;
 			children = (
-				CCF1E9652DB6E9F900DCDE85 /* PersonalBudgetManager */,
+				4E0205A32DCA032700E0C4C5 /* PersonalBudgetManager */,
 				CCF1E9732DB6E9FA00DCDE85 /* PersonalBudgetManagerTests */,
 				CCF1E97D2DB6E9FA00DCDE85 /* PersonalBudgetManagerUITests */,
 				CCF1E9642DB6E9F900DCDE85 /* Products */,
@@ -106,9 +193,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				CCF1E9652DB6E9F900DCDE85 /* PersonalBudgetManager */,
 			);
 			name = PersonalBudgetManager;
 			packageProductDependencies = (
@@ -154,6 +238,7 @@
 				CCF1E97C2DB6E9FA00DCDE85 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				4E0205A32DCA032700E0C4C5 /* PersonalBudgetManager */,
 				CCF1E97D2DB6E9FA00DCDE85 /* PersonalBudgetManagerUITests */,
 			);
 			name = PersonalBudgetManagerUITests;

@@ -9,6 +9,8 @@ import SwiftUI
 
 // Helper view for Dashboard
 struct ProgressBar: View {
+    
+    
     let value: CGFloat
     
     var body: some View {
