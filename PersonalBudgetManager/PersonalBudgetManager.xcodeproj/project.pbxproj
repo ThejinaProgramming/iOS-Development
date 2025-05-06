@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4E0205002DC9FF0F00E0C4C5 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0204FF2DC9FF0F00E0C4C5 /* Currency.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		CCF1E9712DB6E9FA00DCDE85 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E0204FF2DC9FF0F00E0C4C5 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		CCF1E9632DB6E9F900DCDE85 /* PersonalBudgetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalBudgetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCF1E9702DB6E9FA00DCDE85 /* PersonalBudgetManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalBudgetManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCF1E97A2DB6E9FA00DCDE85 /* PersonalBudgetManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalBudgetManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +80,7 @@
 		CCF1E95A2DB6E9F900DCDE85 = {
 			isa = PBXGroup;
 			children = (
+				4E0204FF2DC9FF0F00E0C4C5 /* Currency.swift */,
 				CCF1E9652DB6E9F900DCDE85 /* PersonalBudgetManager */,
 				CCF1E9732DB6E9FA00DCDE85 /* PersonalBudgetManagerTests */,
 				CCF1E97D2DB6E9FA00DCDE85 /* PersonalBudgetManagerUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E0205002DC9FF0F00E0C4C5 /* Currency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
