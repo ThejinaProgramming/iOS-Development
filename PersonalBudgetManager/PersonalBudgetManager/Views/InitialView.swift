@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InitialView: View {
-    @ObservedObject var reminderVM : ReminderViewModel
     
     var body: some View {
         NavigationStack{
@@ -34,7 +33,7 @@ struct InitialView: View {
                     .padding(.top, 8)
             }
             
-            NavigationLink(destination: SignView(reminderVM: reminderVM)) {
+            NavigationLink(destination: SignView()) {
                 Text("Go Inside...")
             }.padding(.top)
         }

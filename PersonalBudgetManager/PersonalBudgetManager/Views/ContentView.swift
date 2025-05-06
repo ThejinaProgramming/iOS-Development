@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var reminderVM : ReminderViewModel
+    @StateObject private var reminderVM = ReminderViewModel()
     @EnvironmentObject var settingsManager: SettingsManager
     @StateObject private var assetVM = AssetsViewModel()
     

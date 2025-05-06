@@ -15,7 +15,6 @@ struct SignView: View {
     @State private var isSignInActive = true
     @State private var isSuccessful = false
 
-    @ObservedObject var reminderVM : ReminderViewModel
     var body: some View {
         NavigationStack{
             VStack{
@@ -72,7 +71,7 @@ struct SignView: View {
                                 .foregroundColor(.gray)
                             if(isSignInActive){
                                 Spacer()
-                                NavigationLink(destination: ForgotPasswordView(reminderVM: reminderVM)){
+                                NavigationLink(destination: ForgotPasswordView()){
                                     Text("Forgot Password?")
                                         .foregroundColor(.blue)
                                 }
@@ -158,7 +157,7 @@ struct SignView: View {
                     .padding(.top)
                 }
                 .fullScreenCover(isPresented: $isSuccessful){
-                    ContentView(reminderVM: reminderVM)
+                    ContentView()
                 }
             }
             .padding()
