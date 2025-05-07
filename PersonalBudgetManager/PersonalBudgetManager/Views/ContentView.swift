@@ -32,6 +32,9 @@ struct ContentView: View {
             SettingsView().tabItem {
                 Label("Settings", systemImage: "gear")
             }
+            FinancialAdvisorsView().tabItem {
+                Label("Contact", systemImage: "person.fill.checkmark")
+            }
         }
     }
 }

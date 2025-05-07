@@ -146,6 +146,9 @@ struct SignView: View {
                                 if(!showAlert){
                                     signViewModel.addUser(email: email, password: password)
                                 }
+                                email = ""
+                                password = ""
+                                confirmPassword = ""
                             }
                         }
                         .frame(maxWidth: .infinity)
