@@ -132,7 +132,7 @@ struct SignView: View {
                             if (isSignInActive && !showAlert){
                                 for user in signViewModel.users{
                                     if((user.email == email) && (user.password == password)){
-                                        isSuccessful.toggle()
+                                        isSuccessful = true
                                     }
                                 }
                                 if (!isSuccessful){

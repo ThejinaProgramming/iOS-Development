@@ -60,16 +60,13 @@ struct FinancialAdvisorsView: View {
     }
     
     func fetchUserInfo() async throws -> [Person]{
-        // step 1 - contruct the url
         let urlString = "https://jsonplaceholder.typicode.com/users"
         guard let url = URL(string: urlString) else {
             throw CustomError.invalidURL
         }
         
-        // step 2 - url session
         let (data, response) = try await URLSession.shared.data(from: url)
         
-        // step 3 - if the received response if valid
         guard let response = response as? HTTPURLResponse else {
             throw CustomError.invalidResponse
         }

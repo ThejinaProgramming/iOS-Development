@@ -34,6 +34,7 @@ class SignViewModel: ObservableObject{
         signItem.password = password
         
         saveUser()
+        fetchUser()
         objectWillChange.send()
     }
     
