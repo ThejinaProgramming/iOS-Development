@@ -19,16 +19,7 @@ struct SetBudgetView: View {
     // Asset
     @ObservedObject var assetVM : AssetsViewModel
     
-    let totalBudget: Double = 2000
-    let spendBudget: Double = 1200
-    
-    var remainingBudget: Double {
-        totalBudget - spendBudget
-    }
-    
-    var budgetUsedPecentage: Double {
-        spendBudget/totalBudget
-    }
+    @StateObject private var transactionVM = TransactionViewModel()
     
     var body: some View {
             VStack(alignment: .leading, spacing: 20){
@@ -44,26 +35,26 @@ struct SetBudgetView: View {
                         HStack{
                             Text("Budget Used")
                             Spacer()
-                            Text("\(Int(budgetUsedPecentage * 100))%")
+                            Text("\((transactionVM.calculateTotalExpense()/(assetVM.calculateTotalAssets() + transactionVM.calculateTotalIncome())*100).rounded())%")
                                 .font(.headline)
                         }
-                        ProgressBar(value: budgetUsedPecentage)
+                        ProgressBar(value: (transactionVM.calculateTotalExpense()/(assetVM.calculateTotalAssets() + transactionVM.calculateTotalIncome())))
                             .tint(.blue)
                         HStack{
                             Text("Total Budget:")
                             Spacer()
-                            Text("\(settingsManager.getCurrencySymbol())\(totalBudget, specifier: "%.0f")")
+                            Text("\(settingsManager.getCurrencySymbol())\(assetVM.calculateTotalAssets() + transactionVM.calculateTotalIncome(), specifier: "%.0f")")
                         }
                         HStack{
                             Text("Spent:")
                             Spacer()
-                            Text("\(settingsManager.getCurrencySymbol())\(spendBudget, specifier: "%.0f")")
+                            Text("\(settingsManager.getCurrencySymbol())\(transactionVM.calculateTotalExpense(), specifier: "%.0f")")
                         }
                         HStack{
                             Text("Remaining:")
                             Spacer()
-                            Text("\(settingsManager.getCurrencySymbol())\(remainingBudget, specifier: "%.0f")")
-                                .foregroundColor(remainingBudget >= 0 ? .green: .red)
+                            Text("\(settingsManager.getCurrencySymbol())\((assetVM.calculateTotalAssets() + transactionVM.calculateTotalIncome() - transactionVM.calculateTotalExpense()), specifier: "%.0f")")
+                                .foregroundColor(((assetVM.calculateTotalAssets() + transactionVM.calculateTotalIncome() - transactionVM.calculateTotalExpense())) >= 0 ? .green: .red)
                         }
                     }
                 }

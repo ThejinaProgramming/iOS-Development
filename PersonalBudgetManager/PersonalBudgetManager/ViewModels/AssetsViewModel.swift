@@ -49,4 +49,8 @@ class AssetsViewModel: ObservableObject{
         PersistenceController.shared.saveContext()
     }
     
+    //calculations
+    func calculateTotalAssets() -> Double{
+        return assets.reduce(0){$0 + $1.amount}
+    }
 }

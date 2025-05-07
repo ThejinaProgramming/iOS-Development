@@ -12,6 +12,7 @@ struct Dashboard: View {
     @State private var showingAddTransactionView = false
     
     @StateObject private var transactionVM = TransactionViewModel()
+    @StateObject private var assetsVM = AssetsViewModel()
     
     var body: some View {
         NavigationStack{
@@ -24,7 +25,7 @@ struct Dashboard: View {
                             VStack{
                                 Text("Total Balance")
                                     .font(.headline)
-                                Text("\(settingsManager.getCurrencySymbol()) 1300")
+                                Text("\(settingsManager.getCurrencySymbol())" + String(assetsVM.calculateTotalAssets() + transactionVM.calculateTotalIncome() - transactionVM.calculateTotalExpense()))
                                     .font(.title)
                             }
                         }
@@ -36,7 +37,7 @@ struct Dashboard: View {
                                 VStack{
                                     Text("Income")
                                         .font(.subheadline)
-                                    Text("\(settingsManager.getCurrencySymbol()) 1200")
+                                    Text("\(settingsManager.getCurrencySymbol())" + String(transactionVM.calculateTotalIncome()))
                                 }
                             }
                             Spacer()
@@ -46,7 +47,7 @@ struct Dashboard: View {
                                 VStack{
                                     Text("Expense")
                                         .font(.subheadline)
-                                    Text("\(settingsManager.getCurrencySymbol()) 1000")
+                                    Text("\(settingsManager.getCurrencySymbol())" + String(transactionVM.calculateTotalExpense()))
                                 }
                             }
                         }
@@ -60,15 +61,15 @@ struct Dashboard: View {
                         Text("Budget Progress")
                             .font(.headline)
                         HStack{
-                            Text("60%")
+                            Text(String((transactionVM.calculateTotalExpense()/(assetsVM.calculateTotalAssets() + transactionVM.calculateTotalIncome())*100).rounded()))
                                 .font(.title)
                             Spacer()
                         }
-                        ProgressBar(value: 0.6)
+                        ProgressBar(value: (transactionVM.calculateTotalExpense()/(assetsVM.calculateTotalAssets() + transactionVM.calculateTotalIncome())))
                         HStack{
-                            Text("Spent: \(settingsManager.getCurrencySymbol())1200")
+                            Text("Spent: \(settingsManager.getCurrencySymbol())" + String(transactionVM.calculateTotalExpense()))
                             Spacer()
-                            Text("Goal: \(settingsManager.getCurrencySymbol())1000")
+                            Text("Total: \(settingsManager.getCurrencySymbol())" + String((assetsVM.calculateTotalAssets() + transactionVM.calculateTotalIncome())))
                         }
                     }
                     .padding()

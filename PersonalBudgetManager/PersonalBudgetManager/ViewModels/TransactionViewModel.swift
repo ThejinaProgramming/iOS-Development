@@ -53,4 +53,14 @@ class TransactionViewModel: ObservableObject{
     private func saveTransaction(){
         PersistenceController.shared.saveContext()
     }
+    
+    
+    // functions for analytics
+    func calculateTotalExpense() -> Double{
+        return transactions.filter{$0.isExpense == true}.reduce(0){$0 + $1.amount}
+    }
+    
+    func calculateTotalIncome() -> Double{
+        return transactions.filter{$0.isExpense == false}.reduce(0){$0 + $1.amount}
+    }
 }
