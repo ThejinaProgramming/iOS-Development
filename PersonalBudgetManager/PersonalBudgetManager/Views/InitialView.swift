@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InitialView: View {
+    @StateObject private var signVM = SignViewModel()
     
     var body: some View {
         NavigationStack{
@@ -33,7 +34,7 @@ struct InitialView: View {
                     .padding(.top, 8)
             }
             
-            NavigationLink(destination: SignView()) {
+            NavigationLink(destination: SignView(signViewModel: signVM)) {
                 Text("Go Inside...")
             }.padding(.top)
         }

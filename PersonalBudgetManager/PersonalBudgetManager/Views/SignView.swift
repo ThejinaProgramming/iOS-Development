@@ -14,7 +14,37 @@ struct SignView: View {
     @State private var confirmPassword = ""
     @State private var isSignInActive = true
     @State private var isSuccessful = false
-
+    
+    @ObservedObject var signViewModel: SignViewModel
+    
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
+    
+    func checkLogin(){
+        isSuccessful.toggle()
+    }
+    
+    func checkPassword(password: String, confirmPassword: String){
+        if(password != confirmPassword){
+            alertMessage = "Passwords are mismatch!"
+            showAlert.toggle()
+        }
+    }
+    
+    func checkFieldsSignup(email: String, password: String, confirmPassword: String){
+        if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty){
+            alertMessage = "All fields are required"
+            showAlert = true
+        }
+    }
+    
+    func checkFieldsSignin(email: String, password: String){
+        if (email.isEmpty || password.isEmpty){
+            alertMessage = "All fields are required"
+            showAlert = true
+        }
+    }
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -98,12 +128,24 @@ struct SignView: View {
                         
                         //Main action button
                         Button(isSignInActive ? "Sign In" : "Create an Account"){
-                            if isSignInActive{
-                                //Add the logic
-                                isSuccessful = true
+                            checkFieldsSignin(email: email, password: password)
+                            if (isSignInActive && !showAlert){
+                                for user in signViewModel.users{
+                                    if((user.email == email) && (user.password == password)){
+                                        isSuccessful.toggle()
+                                    }
+                                }
+                                if (!isSuccessful){
+                                        alertMessage = "Credentials are incorrect."
+                                        showAlert = true
+                                }
                             }
                             else{
-                                //Add the logic
+                                checkPassword(password: password, confirmPassword: confirmPassword)
+                                checkFieldsSignup(email: email, password: password, confirmPassword: confirmPassword)
+                                if(!showAlert){
+                                    signViewModel.addUser(email: email, password: password)
+                                }
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -158,6 +200,13 @@ struct SignView: View {
                 }
                 .fullScreenCover(isPresented: $isSuccessful){
                     ContentView()
+                }
+                .alert("Oops ! Error", isPresented: $showAlert) {
+                    Button("Ok", role: .cancel) {
+                        showAlert = false
+                    }
+                } message: {
+                    Text(alertMessage)
                 }
             }
             .padding()

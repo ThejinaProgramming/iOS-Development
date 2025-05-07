@@ -21,12 +21,9 @@ struct DisplayAllTransactionsView: View {
                 VStack{
                     ForEach($transactionVM.transactions){$transaction in
                         Button(action: {
-                            isSelected.toggle()
+                            
                         }){
                             TransactionRow(category: transaction.category ?? "" , amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount), type: transaction.isExpense ? .expense : .income)
-                        }
-                        .onTapGesture {
-                            selectedRecord = transaction
                         }
                     }
                 }

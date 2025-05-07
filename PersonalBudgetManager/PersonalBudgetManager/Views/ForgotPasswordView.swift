@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @State private var email = ""
+    @StateObject private var signVM = SignViewModel()
+    
     var body: some View {
         NavigationStack{
             VStack(alignment: .leading){
@@ -44,7 +46,7 @@ struct ForgotPasswordView: View {
                 
                 HStack{
                     Spacer()
-                    NavigationLink(destination: SignView()){
+                    NavigationLink(destination: SignView(signViewModel: signVM)){
                         Text("Back to Sign in")
                             .foregroundColor(.blue)
                     }
