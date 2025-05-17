@@ -10,12 +10,13 @@ import SwiftUI
 struct AddTransactionView: View {
     @State private var isExpense: Bool = true
     @State private var amount: String = ""
-    @State private var category: String = ""
+    @State private var selectedCategory: Category?
     @State private var date: Date = Date()
     @State private var description: String = ""
     @State private var isCategoryDropdownVisible: Bool = false
-    @State private var availableCategories: [String] = ["Food", "Transport", "Entertainment", "Salary", "Other"]
+    @State private var showingCreateCategoryView = false
     
+    @StateObject private var categoryVM = CategoryViewModel()
     @ObservedObject var transactionVM: TransactionViewModel
     @Binding var showingAddTransactionView: Bool
     
@@ -31,7 +32,8 @@ struct AddTransactionView: View {
                 HStack{
                     Button(action: {
                         isExpense = true
-                    }){
+                        selectedCategory = nil
+                    }) {
                         HStack{
                             Image(systemName: isExpense ? "circle.fill" : "circle")
                             Text("Expense")
@@ -44,7 +46,8 @@ struct AddTransactionView: View {
                     
                     Button(action: {
                         isExpense = false
-                    }){
+                        selectedCategory = nil
+                    }) {
                         HStack{
                             Image(systemName: !isExpense ? "circle.fill" : "circle")
                             Text("Income")
@@ -63,6 +66,7 @@ struct AddTransactionView: View {
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .padding(.bottom, 10)
                 
                 Text("Category")
                     .font(.headline)
@@ -70,8 +74,16 @@ struct AddTransactionView: View {
                     isCategoryDropdownVisible.toggle()
                 }){
                     HStack{
-                        Text(category.isEmpty ? "Select category" : category)
-                            .foregroundColor(category.isEmpty ? .gray : .black)
+                        if let category = selectedCategory {
+                            Image(systemName: category.icon ?? "")
+                                .foregroundColor(categoryVM.colorFromHex(category.colorHex ?? "#000000"))
+                                .font(.system(size: 18))
+                            Text(category.name ?? "")
+                                .foregroundStyle(Color.primary)
+                        } else {
+                            Text("Select category")
+                                .foregroundStyle(Color.gray)
+                        }
                         Spacer()
                         Image(systemName: "chevron.down")
                             .foregroundColor(.gray)
@@ -83,28 +95,65 @@ struct AddTransactionView: View {
                 .buttonStyle(PlainButtonStyle())
                 .overlay(alignment: .top){
                     if isCategoryDropdownVisible{
-                        VStack{
-                            ForEach(availableCategories, id: \.self){
-                                cat in Button(action: {
-                                    category = cat
+                        VStack(spacing: 0){
+                            //Display categories based on transaction type
+                            ForEach(categoryVM.getCategories(isExpense: isExpense)){ category in
+                                Button(action: {
+                                    selectedCategory = category
                                     isCategoryDropdownVisible = false
                                 }){
-                                    Text(cat)
-                                        .foregroundColor(.black)
-                                        .padding(.vertical, 8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    HStack {
+                                        Image(systemName: category.icon ?? "")
+                                            .foregroundColor(categoryVM.colorFromHex(category.colorHex ?? "#000000"))
+                                            .font(.system(size: 18))
+                                        Text(category.name ?? "")
+                                            .foregroundStyle(Color.primary)
+                                        Spacer()
+                                        if selectedCategory?.id == category.id {
+                                            Image(systemName: "checkmark")
+                                                .foregroundStyle(Color.blue)
+                                        }
+                                    }
+                                    .padding(.vertical, 12)
+                                    .padding(.horizontal)
+                                    .background(selectedCategory?.id == category.id ? Color.blue.opacity(0.1): Color.clear)
+                                    
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                
                                 Divider()
+                                    .padding(.leading, 40)
                             }
+                            
+                            
+                            //Add "+ Create New Category" option
+                            Button(action: {
+                                isCategoryDropdownVisible = false
+                                showingCreateCategoryView = true
+                            }) {
+                                HStack {
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundStyle(Color.blue)
+                                        .font(.system(size: 18))
+                                    Text("Create New Category")
+                                        .foregroundStyle(Color.blue)
+                                    Spacer()
+                                }
+                                .padding(.vertical, 12)
+                                .padding(.horizontal)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            
                         }
-                        .padding(.vertical)
-                        .background(Color.white)
+                        .background(Color(.systemBackground))
                         .cornerRadius(8)
-                        .shadow(radius: 3)
-                        .offset(y: 40)
+                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                        .offset(y: 50)
+                        .zIndex(1)
                     }
                 }
+                .padding(.bottom, 10)
+                
                 Text("Date")
                     .font(.headline)
                 DatePicker(
@@ -113,6 +162,7 @@ struct AddTransactionView: View {
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
+                .padding(.bottom, 10)
                 
                 Text("Description (Optional)")
                     .font(.headline)
@@ -121,21 +171,24 @@ struct AddTransactionView: View {
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
-                
+                    .padding(.bottom, 20)
                 
                 Spacer()
                 
                 HStack{
                     Button("Save"){
-                        transactionVM.addTransaction(amount: amount, category: category, date: date, isExpense: isExpense, note: description)
-                        transactionVM.fetchTransactions()
-                        showingAddTransactionView.toggle()
+                        if let category = selectedCategory {
+                            transactionVM.addTransaction(amount: amount, category: category.name ?? "", date: date, isExpense: isExpense, note: description)
+                            transactionVM.fetchTransactions()
+                            showingAddTransactionView.toggle()
+                        }
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.black)
+                    .background(selectedCategory == nil ? Color.gray : Color.black)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .disabled(selectedCategory == nil)
                     
                     Button("Cancel"){
                         showingAddTransactionView.toggle()
@@ -148,6 +201,19 @@ struct AddTransactionView: View {
                 }
             }
             .padding()
+        }
+        .onTapGesture {
+            if isCategoryDropdownVisible {
+                isCategoryDropdownVisible = false
+            }
+        }
+        .sheet(isPresented: $showingCreateCategoryView) {
+            CreateCategoryView(isExpense: isExpense, categoryVM: categoryVM, onDismiss: {
+                categoryVM.fetchCategories()
+            })
+        }
+        .onAppear {
+            categoryVM.fetchCategories()
         }
     }
 }
