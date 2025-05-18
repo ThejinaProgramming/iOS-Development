@@ -18,7 +18,8 @@ struct AddTransactionView: View {
     
     @StateObject private var categoryVM = CategoryViewModel()
     @ObservedObject var transactionVM: TransactionViewModel
-    @Binding var showingAddTransactionView: Bool
+    //@Binding var showingAddTransactionView: Bool
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ScrollView{
@@ -180,7 +181,8 @@ struct AddTransactionView: View {
                         if let category = selectedCategory {
                             transactionVM.addTransaction(amount: amount, category: category.name ?? "", date: date, isExpense: isExpense, note: description)
                             transactionVM.fetchTransactions()
-                            showingAddTransactionView.toggle()
+                            //showingAddTransactionView.toggle()
+                            dismiss()
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -191,7 +193,8 @@ struct AddTransactionView: View {
                     .disabled(selectedCategory == nil)
                     
                     Button("Cancel"){
-                        showingAddTransactionView.toggle()
+                        dismiss()
+                       // showingAddTransactionView.toggle()
                     }
                     .frame(maxWidth: .infinity)
                     .padding()

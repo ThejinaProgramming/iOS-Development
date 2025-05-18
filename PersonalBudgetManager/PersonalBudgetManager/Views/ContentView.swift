@@ -20,9 +20,9 @@ struct ContentView: View {
             SetBudgetView(assetVM: assetVM).tabItem {
                 Label("Budget", systemImage: "dollarsign")
             }
-            CreateCategoryView().tabItem {
-                Label("Category", systemImage: "table")
-            }
+            //CreateCategoryView().tabItem {
+                //Label("Category", systemImage: "table")
+            //}
             RemindersView(reminderViewModel: reminderVM).tabItem {
                 Label("Reminder", systemImage: "clock")
             }
