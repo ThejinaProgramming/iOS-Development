@@ -159,33 +159,39 @@ struct AddTransactionView: View {
             
                 if isCategoryDropdownVisible{
                         VStack(spacing: 0){
-                            //Display categories based on transaction type
-                            ForEach(categoryVM.getCategories(isExpense: isExpense)){ category in
-                                Button {
-                                    selectedCategory = category
-                                    isCategoryDropdownVisible = false
-                                } label: {
-                                    HStack {
-                                        Image(systemName: category.icon ?? "")
-                                            .foregroundColor(categoryVM.colorFromHex(category.colorHex ?? "#000000"))
-                                            .font(.system(size: 18))
-                                        Text(category.name ?? "")
-                                            .foregroundStyle(Color.primary)
-                                        Spacer()
-                                        if selectedCategory?.id == category.id {
-                                            Image(systemName: "checkmark")
-                                                .foregroundStyle(Color.blue)
+                            ScrollView {
+                                VStack(spacing: 0) {
+                                    //Display categories based on transaction type
+                                    ForEach(categoryVM.getCategories(isExpense: isExpense)){ category in
+                                        Button {
+                                            selectedCategory = category
+                                            isCategoryDropdownVisible = false
+                                        } label: {
+                                            HStack {
+                                                Image(systemName: category.icon ?? "")
+                                                    .foregroundColor(categoryVM.colorFromHex(category.colorHex ?? "#000000"))
+                                                    .font(.system(size: 18))
+                                                Text(category.name ?? "")
+                                                    .foregroundStyle(Color.primary)
+                                                Spacer()
+                                                if selectedCategory?.id == category.id {
+                                                    Image(systemName: "checkmark")
+                                                        .foregroundStyle(Color.blue)
+                                                }
+                                            }
+                                            .padding(.vertical, 12)
+                                            .padding(.horizontal)
+                                            
                                         }
+                                        .buttonStyle(.plain)
+                                        Divider()
+                                            .padding(.leading, 40)
                                     }
-                                    .padding(.vertical, 12)
-                                    .padding(.horizontal)
-                                    
                                 }
-                                .buttonStyle(.plain)
-                                Divider()
-                                    .padding(.leading, 40)
                             }
+                            .frame(maxHeight: 250)
                             
+                            Divider()
                             
                             //Add "+ Create New Category" option
                             Button {
