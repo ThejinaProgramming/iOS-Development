@@ -9,10 +9,18 @@ import SwiftUI
 
 struct Dashboard: View {
     @EnvironmentObject private var settingsManager: SettingsManager
-    //@State private var showingAddTransactionView = false
     
     @StateObject private var transactionVM = TransactionViewModel()
     @StateObject private var assetsVM = AssetsViewModel()
+    @StateObject private var categoryVM = CategoryViewModel()
+    
+    // Helper function to find category by name
+    private func findCategory(name: String, isExpense: Bool) -> Category? {
+        return categoryVM.categories.first { category in
+            category.name == name && category.isExpense == isExpense
+        }
+    }
+    
     
     var body: some View {
         NavigationStack{
@@ -94,12 +102,20 @@ struct Dashboard: View {
                             .font(.headline)
                         ScrollView{
                             VStack{
-                                ForEach(transactionVM.transactions){transaction in
+                                ForEach(transactionVM.transactions.prefix(5)){transaction in
                                     Button{
                                         
                                     }
                                     label:{
-                                        TransactionRow(category: transaction.category ?? "" , amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount), type: transaction.isExpense ? .expense : .income)
+                                        let category = findCategory(name: transaction.category ?? "", isExpense: transaction.isExpense)
+                                        
+                                        TransactionRow(
+                                            category: transaction.category ?? "" ,
+                                            amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount),
+                                            type: transaction.isExpense ? .expense : .income,
+                                            categoryIcon: category?.icon,
+                                            categoryColor: category?.colorHex
+                                        )
                                     }
                                 }
                             }
@@ -128,6 +144,7 @@ struct Dashboard: View {
         
         .onAppear{
             transactionVM.fetchTransactions()
+            categoryVM.fetchCategories()
         }
     }
 }
