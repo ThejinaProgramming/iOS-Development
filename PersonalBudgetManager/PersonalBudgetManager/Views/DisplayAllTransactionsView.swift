@@ -10,6 +10,7 @@ import SwiftUI
 struct DisplayAllTransactionsView: View {
     @EnvironmentObject private var settingsManager: SettingsManager
     @ObservedObject var transactionVM: TransactionViewModel
+    @StateObject private var categoryVM = CategoryViewModel()
     
     @State var selectedRecord = Transaction()
     @State var id: String?
@@ -23,7 +24,21 @@ struct DisplayAllTransactionsView: View {
                         Button(action: {
                             
                         }){
-                            TransactionRow(category: transaction.category ?? "" , amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount), type: transaction.isExpense ? .expense : .income)
+                            let category = findCategory(name: transaction.category ?? "", isExpense: transaction.isExpense)
+                            
+                            TransactionRow(
+                                category: transaction.category ?? "" ,
+                                amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount),
+                                type: transaction.isExpense ? .expense : .income,
+                                categoryIcon: category?.icon,
+                                categoryColor: category?.colorHex
+                            )
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        if transaction.id != transactionVM.transactions.last?.id {
+                            Divider()
+                                .padding(.horizontal)
                         }
                     }
                 }
@@ -32,6 +47,16 @@ struct DisplayAllTransactionsView: View {
                 
             }
             .padding()
+        }
+        .onAppear {
+            categoryVM.fetchCategories()
+        }
+    }
+    
+    //Helper function to find category by name
+    private func findCategory(name: String, isExpense: Bool) -> Category? {
+        return categoryVM.categories.first { category in
+            category.name == name && category.isExpense == isExpense
         }
     }
 }
