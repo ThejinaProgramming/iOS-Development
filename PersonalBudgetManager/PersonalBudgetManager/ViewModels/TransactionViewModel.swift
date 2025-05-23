@@ -28,6 +28,7 @@ class TransactionViewModel: ObservableObject{
         }
     }
     
+    // MARK: Create (Add) Transaction
     func addTransaction(amount: String, category: String, date: Date, isExpense: Bool, note: String){
         let transactionItem = Transaction(context: viewContext)
         transactionItem.id = UUID()
@@ -41,8 +42,19 @@ class TransactionViewModel: ObservableObject{
         objectWillChange.send()
     }
     
+    // MARK: Update (Edit) Transactions
+    func updateTransaction(_ transaction: Transaction, amount: String, category: String, date: Date, isExpense: Bool, note: String) {
+        transaction.amount = Double(amount) ?? 0.0
+        transaction.category = category
+        transaction.date = date
+        transaction.isExpense = isExpense
+        transaction.note = note
+        
+        saveTransaction()
+        objectWillChange.send()
+    }
     
-    
+    // MARK: Delete Transaction
     func deleteTransaction(_ transactionItem: Transaction){
         viewContext.delete(transactionItem)
         

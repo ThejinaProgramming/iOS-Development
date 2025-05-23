@@ -20,10 +20,8 @@ struct DisplayAllTransactionsView: View {
         ScrollView{
             GroupBox{
                 VStack{
-                    ForEach($transactionVM.transactions){$transaction in
-                        Button(action: {
-                            
-                        }){
+                    ForEach(transactionVM.transactions){ transaction in
+                        NavigationLink(destination: AddTransactionView(transactionVM: transactionVM, mode: .edit(transaction), navigationSource: .transactionHistory)) {
                             let category = findCategory(name: transaction.category ?? "", isExpense: transaction.isExpense)
                             
                             TransactionRow(
@@ -50,6 +48,7 @@ struct DisplayAllTransactionsView: View {
         }
         .onAppear {
             categoryVM.fetchCategories()
+            transactionVM.fetchTransactions()
         }
     }
     
