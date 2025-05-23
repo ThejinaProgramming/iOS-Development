@@ -86,7 +86,7 @@ struct Dashboard: View {
                 .padding(.top)
                 
                 //Add transaction button
-                NavigationLink(destination: AddTransactionView(transactionVM: transactionVM)) {
+                NavigationLink(destination: AddTransactionView(transactionVM: transactionVM, mode: .create, navigationSource: .dashboard)) {
                         Image(systemName: "plus")
                             .font(.title)
                             .padding()
@@ -103,11 +103,8 @@ struct Dashboard: View {
                         ScrollView{
                             VStack{
                                 ForEach(transactionVM.transactions.prefix(5)){transaction in
-                                    Button{
-                                        
-                                    }
-                                    label:{
-                                        let category = findCategory(name: transaction.category ?? "", isExpense: transaction.isExpense)
+                                    NavigationLink(destination: AddTransactionView(transactionVM: transactionVM, mode: .edit(transaction), navigationSource: .dashboard)) {
+                                            let category = findCategory(name: transaction.category ?? "", isExpense: transaction.isExpense)
                                         
                                         TransactionRow(
                                             category: transaction.category ?? "" ,
@@ -116,7 +113,9 @@ struct Dashboard: View {
                                             categoryIcon: category?.icon,
                                             categoryColor: category?.colorHex
                                         )
+                                        
                                     }
+                                    .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
