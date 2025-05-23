@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Dashboard: View {
     @EnvironmentObject private var settingsManager: SettingsManager
-    @State private var showingAddTransactionView = false
+    //@State private var showingAddTransactionView = false
     
     @StateObject private var transactionVM = TransactionViewModel()
     @StateObject private var assetsVM = AssetsViewModel()
@@ -78,16 +78,14 @@ struct Dashboard: View {
                 .padding(.top)
                 
                 //Add transaction button
-                Button{
-                    showingAddTransactionView = true
-                }label: {
-                    Image(systemName: "plus")
-                        .font(.title)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                }
+                NavigationLink(destination: AddTransactionView(transactionVM: transactionVM)) {
+                        Image(systemName: "plus")
+                            .font(.title)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                    }
                 
                 //Recent Transactions
                 GroupBox{
@@ -127,9 +125,7 @@ struct Dashboard: View {
                 }
             }
         }
-        .sheet(isPresented: $showingAddTransactionView){
-            AddTransactionView(transactionVM: transactionVM, showingAddTransactionView: $showingAddTransactionView)
-        }
+        
         .onAppear{
             transactionVM.fetchTransactions()
         }
