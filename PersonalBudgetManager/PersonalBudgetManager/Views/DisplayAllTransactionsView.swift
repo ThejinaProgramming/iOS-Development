@@ -29,7 +29,8 @@ struct DisplayAllTransactionsView: View {
                                 amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount),
                                 type: transaction.isExpense ? .expense : .income,
                                 categoryIcon: category?.icon,
-                                categoryColor: category?.colorHex
+                                categoryColor: category?.colorHex,
+                                date: transaction.date
                             )
                         }
                         .buttonStyle(PlainButtonStyle())

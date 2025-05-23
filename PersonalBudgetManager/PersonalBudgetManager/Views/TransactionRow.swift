@@ -14,6 +14,7 @@ struct TransactionRow: View {
     let type: TransactionType
     let categoryIcon: String?
     let categoryColor: String?
+    let date: Date?
     
     @StateObject private var categoryVM = CategoryViewModel()
     
@@ -42,9 +43,22 @@ struct TransactionRow: View {
                 Text(category)
                     .font(.headline)
                     .foregroundColor(.primary)
-                Text(type == .income ? "Income" : "Expense")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                
+                HStack(spacing: 4) {
+                    Text(type == .income ? "Income" : "Expense")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    //Display date
+                    if let transactionDate = date {
+                        Text(".")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Text(dateFormatter.string(from: transactionDate))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
             
             Spacer()
@@ -60,6 +74,14 @@ struct TransactionRow: View {
         }
         .padding(.vertical, 8)
     }
+    
+    //Date formatter for transaction date
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    } ()
 }
 
 
