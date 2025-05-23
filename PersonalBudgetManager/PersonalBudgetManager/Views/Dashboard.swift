@@ -14,14 +14,7 @@ struct Dashboard: View {
     @StateObject private var assetsVM = AssetsViewModel()
     @StateObject private var categoryVM = CategoryViewModel()
     
-    // Helper function to find category by name
-    private func findCategory(name: String, isExpense: Bool) -> Category? {
-        return categoryVM.categories.first { category in
-            category.name == name && category.isExpense == isExpense
-        }
-    }
-    
-    
+
     var body: some View {
         NavigationStack{
             VStack{
@@ -111,9 +104,9 @@ struct Dashboard: View {
                                             amount: "\(settingsManager.getCurrencySymbol())" + String(transaction.amount),
                                             type: transaction.isExpense ? .expense : .income,
                                             categoryIcon: category?.icon,
-                                            categoryColor: category?.colorHex
+                                            categoryColor: category?.colorHex,
+                                            date: transaction.date
                                         )
-                                        
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                 }
@@ -144,6 +137,13 @@ struct Dashboard: View {
         .onAppear{
             transactionVM.fetchTransactions()
             categoryVM.fetchCategories()
+        }
+    }
+    
+    // Helper function to find category by name
+    private func findCategory(name: String, isExpense: Bool) -> Category? {
+        return categoryVM.categories.first { category in
+            category.name == name && category.isExpense == isExpense
         }
     }
 }
