@@ -79,7 +79,7 @@ struct AddTransactionView: View {
                                 Text("Expense")
                             }
                             .padding(.horizontal)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                         }
                         .buttonStyle(PlainButtonStyle())
                         Spacer()
@@ -93,7 +93,7 @@ struct AddTransactionView: View {
                                 Text("Income")
                             }
                             .padding(.horizontal)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
@@ -189,7 +189,7 @@ struct AddTransactionView: View {
                             }
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(selectedCategory == nil ? Color.gray : Color.black)
+                            .background(selectedCategory == nil ? Color.blue : Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                             .disabled(selectedCategory == nil)
@@ -199,7 +199,8 @@ struct AddTransactionView: View {
                             }
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.black)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
                             .cornerRadius(8)
                         }
                     }
@@ -275,24 +276,12 @@ struct AddTransactionView: View {
                         }
                         .background(Color(.systemBackground))
                         .cornerRadius(8)
-                        //.shadow(radius: 5)
-                        //.padding(.horizontal)
-                       // .offset(y: 150)
                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
                         .frame(width: categoryButtonFrame.width)
                         .position(x: categoryButtonFrame.midX, y: categoryButtonFrame.maxY + 150)
                         .zIndex(100)
                     }
-                               
-          //  if isCategoryDropdownVisible {
-           //     Color.clear
-             //       .contentShape(Rectangle())
-               //     .onTapGesture {
-                 //       isCategoryDropdownVisible = false
-                   // }
-                    //.zIndex(90)
-                
-           // }
+                    
             
             // Invisible overlay to capture taps when dropdown is visible
             if isCategoryDropdownVisible {

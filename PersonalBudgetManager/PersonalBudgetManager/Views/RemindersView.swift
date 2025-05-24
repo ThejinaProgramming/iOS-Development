@@ -51,9 +51,10 @@ struct RemindersView: View {
                 Image(systemName: "plus")
                     .font(.title)
                     .padding()
-                    .background(Color.gray)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .clipShape(Circle())
+                    .padding(.bottom)
             }
         }
     }

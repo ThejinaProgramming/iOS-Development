@@ -23,6 +23,7 @@ struct Dashboard: View {
                     VStack(alignment: .leading){
                         HStack{
                             Image(systemName: "creditcard")
+                            
                             VStack{
                                 Text("Total Balance")
                                     .font(.headline)
@@ -128,6 +129,7 @@ struct Dashboard: View {
                         .foregroundColor(.blue)
                         .frame(maxWidth: .infinity, alignment: .center)
                     }
+                    
                     .padding(.horizontal)
                     .padding(.top)
                 }
