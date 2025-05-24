@@ -13,9 +13,9 @@ struct DisplayAllTransactionsView: View {
     @StateObject private var categoryVM = CategoryViewModel()
     
     @State private var searchText = ""
-    @State var selectedRecord = Transaction()
-    @State var id: String?
-    @State private var isSelected = false
+    //@State var selectedRecord = Transaction()
+    //@State var id: String?
+    //@State private var isSelected = false
     
     var body: some View {
         VStack (spacing: 0) {
