@@ -10,13 +10,17 @@ import SwiftUI
 struct InitialView: View {
     @StateObject private var signVM = SignViewModel()
     
+    @State private var logoScale: CGFloat = 0.5
+    @State private var logoOpacity: Double = 0.0
+    @State private var textOpacity: Double = 0.0
+    @State private var buttonOpacity: Double = 0.0
+    
     var body: some View {
         NavigationStack{
             ZStack {
                 //backgroung color
                 Color.blue
                     .ignoresSafeArea()
-                
                 
                 VStack{
                     //App Logo
@@ -25,7 +29,23 @@ struct InitialView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 150, height: 150)
                         .clipShape(Circle())
-                        .padding(.top, 100)
+                        .padding(.top, 130)
+                        .scaleEffect(logoScale)
+                        .opacity(logoOpacity)
+                        .onAppear {
+                            withAnimation(.easeOut(duration: 1.5)) {
+                                logoScale = 1.0
+                                logoOpacity = 1.0
+                            }
+                            
+                            withAnimation(.easeIn(duration: 0.8).delay(1.5)) {
+                                textOpacity = 1.0
+                            }
+                            
+                            withAnimation(.easeIn(duration: 0.8).delay(1.6)) {
+                                buttonOpacity = 1.0
+                            }
+                        }
                                     
                     //App name
                     Text("Personal Budget Manager")
