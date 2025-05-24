@@ -28,8 +28,8 @@ final class PersonalBudgetManagerUITests: XCTestCase {
         //Given
         let app = XCUIApplication()
         app.activate()
-        app/*@START_MENU_TOKEN@*/.buttons["Go Inside..."]/*[[".otherElements.buttons[\"Go Inside...\"]",".buttons.firstMatch",".buttons[\"Go Inside...\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app/*@START_MENU_TOKEN@*/.buttons["Sign Up"]/*[[".otherElements.buttons[\"Sign Up\"]",".buttons[\"Sign Up\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Get Started"].tap()
+        app.buttons["Sign Up"].tap()
         app/*@START_MENU_TOKEN@*/.buttons["Sign In"]/*[[".otherElements.buttons[\"Sign In\"]",".buttons[\"Sign In\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         
         //When
@@ -42,6 +42,8 @@ final class PersonalBudgetManagerUITests: XCTestCase {
         app.buttons.matching(identifier: "Sign In").element(boundBy: 1).tap()
         
     }
+    
+    
 }
 
 

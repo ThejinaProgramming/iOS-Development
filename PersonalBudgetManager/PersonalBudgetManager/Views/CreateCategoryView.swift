@@ -54,8 +54,8 @@ struct CreateCategoryView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(isExpense ? Color.gray : Color.gray.opacity(0.2))
-                        .foregroundColor(isExpense ? .white : .black)
+                        .background(isExpense ? Color.blue : Color.gray.opacity(0.2))
+                        .foregroundColor(isExpense ? .white : .blue)
                         .cornerRadius(10)
                         
                         Button("Income") {
@@ -63,8 +63,8 @@ struct CreateCategoryView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(!isExpense ? Color.gray : Color.gray.opacity(0.2))
-                        .foregroundColor(!isExpense ? .white : .black)
+                        .background(!isExpense ? Color.blue : Color.gray.opacity(0.2))
+                        .foregroundColor(!isExpense ? .white : .blue)
                         .cornerRadius(10)
                     }
                     .padding(.bottom)
@@ -122,7 +122,7 @@ struct CreateCategoryView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(categoryName.isEmpty ? Color.gray : Color.black)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .disabled(categoryName.isEmpty)

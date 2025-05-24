@@ -49,10 +49,13 @@ struct SignView: View {
         NavigationStack{
             VStack{
                 //App logo
-                Circle()
+                Image("LOGO1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .foregroundColor(.gray.opacity(0.3))
-                    .overlay(Text("Personal Wallet"))
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .padding(.top, 40)
                 
                 Text("Personal Budget Manager")
                     .font(.title)
@@ -66,16 +69,18 @@ struct SignView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(isSignInActive ? Color.gray.opacity(0.3): Color.clear)
-                    .foregroundColor(.black)
+                    .background(isSignInActive ? Color.blue : Color.clear)
+                    .foregroundColor(isSignInActive ? .white : .blue)
+                    .cornerRadius(8)
                     
                     Button("Sign Up"){
                         isSignInActive = false
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(!isSignInActive ? Color.gray.opacity(0.3) : Color.clear)
-                    .foregroundColor(.black)
+                    .background(!isSignInActive ? Color.blue : Color.clear)
+                    .foregroundColor(!isSignInActive ? .white : .blue)
+                    .cornerRadius(8)
                 }
                 
                 //Conditional fields
@@ -153,7 +158,7 @@ struct SignView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.black)
+                        .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(8)
                         .padding(.top)
@@ -182,8 +187,13 @@ struct SignView: View {
                                 Text("Google")
                                     .frame(maxWidth: .infinity)
                                     .padding()
-                                    .border(Color.black)
-                                    .foregroundColor(.black)
+                                    .background(Color.white)
+                                    .foregroundColor(.blue)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.blue, lineWidth: 1)
+                                    )
+                                    .cornerRadius(8)
                             }
                             
                             Button{
@@ -192,8 +202,13 @@ struct SignView: View {
                                 Text("Apple")
                                     .frame(maxWidth: .infinity)
                                     .padding()
-                                    .border(Color.black)
-                                    .foregroundColor(.black)
+                                    .background(Color.white)
+                                    .foregroundColor(.blue)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.blue, lineWidth: 1)
+                                    )
+                                    .cornerRadius(8)
                             }
                         }
                         .padding(.top)

@@ -119,7 +119,7 @@ struct SettingsView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.black)
+                .background(Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(10)
             }
